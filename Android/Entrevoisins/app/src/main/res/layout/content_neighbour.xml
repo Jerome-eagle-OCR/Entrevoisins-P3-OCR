@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorButtonNormal"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.neighbour_list.NeighbourDetailActivity"
+    tools:showIn="@layout/activity_neighbour_detail"
+    android:theme="@style/AppTheme.NoActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="top"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="?android:attr/colorBackground"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:elegantTextHeight="true"
+                    android:gravity="bottom"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="24sp"
+                    android:text="Caroline" />
+
+                <TextView
+                    android:id="@+id/neighbour_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1.5"
+                    android:drawableStart="@drawable/ic_baseline_location_on_24"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/colorAccent"
+                    android:gravity="center|left"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    android:text="Saint pierre du mont à 5km" />
+
+                <TextView
+                    android:id="@+id/neighbour_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1.5"
+                    android:drawableStart="@drawable/ic_baseline_local_phone_24"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/colorAccent"
+                    android:gravity="center|left"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    android:text="+33 6 86 57 90 14" />
+
+                <TextView
+                    android:id="@+id/neighbour_fb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1.5"
+                    android:drawableStart="@drawable/ic_baseline_language_24"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/colorAccent"
+                    android:elegantTextHeight="false"
+                    android:fontFamily="sans-serif"
+                    android:freezesText="false"
+                    android:gravity="center|left"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    android:text="www.facebook.fr/Caroline" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="20dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="?android:attr/colorBackground"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top"
+                    android:layout_marginStart="12dp"
+                    android:elegantTextHeight="true"
+                    android:gravity="bottom"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="24sp"
+                    android:text="A propos de moi" />
+
+                <TextView
+                    android:id="@+id/neighbour_aboutMe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    android:text="Bonjour !Je souhaiterais faire de la marche nordique.\ Pas initiée, je recherche une ou plusieurs personnes susceptiblesde m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..\n" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
