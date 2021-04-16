@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +8,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.tabs.TabLayout;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.events.NeighbourDetailEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,11 +31,15 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
     ListNeighbourPagerAdapter mPagerAdapter;
 
+    public static final int NEIGHBOUR_DETAIL_ACTIVITY_REQUEST_CODE = 33;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_neighbour);
         ButterKnife.bind(this);
+
+        EventBus.getDefault().register(this);
 
         setSupportActionBar(mToolbar);
         mPagerAdapter = new ListNeighbourPagerAdapter(getSupportFragmentManager());
@@ -40,6 +51,13 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
     @OnClick(R.id.add_neighbour)
     void addNeighbour() {
-        NeighbourDetailActivity.navigate(this);
+        AddNeighbourActivity.navigate(this);
+    }
+
+    @Subscribe
+    public void onClickNeighbour(NeighbourDetailEvent event) {
+        Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class);
+        neighbourDetailActivityIntent.putExtra("NEIGHBOUR", (Serializable) event.neighbour);
+        startActivityForResult(neighbourDetailActivityIntent, NEIGHBOUR_DETAIL_ACTIVITY_REQUEST_CODE);
     }
 }
