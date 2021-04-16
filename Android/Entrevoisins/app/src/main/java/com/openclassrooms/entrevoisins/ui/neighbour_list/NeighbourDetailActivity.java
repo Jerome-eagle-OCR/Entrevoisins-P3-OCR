@@ -1,6 +1,5 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,11 +7,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.model.Neighbour;
 
 public class NeighbourDetailActivity extends AppCompatActivity {
 
@@ -24,6 +22,8 @@ public class NeighbourDetailActivity extends AppCompatActivity {
     private TextView mNeighbourPhone;
     private TextView mNeighbourFB;
     private TextView mNeighbourAboutMe;
+
+    private Neighbour mNeighbour;
 
     public static String SELECTED_NEIGHBOUR = "SELECTED_NEIGHBOUR";
 
@@ -51,16 +51,15 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         mNeighbourFB.setText("www.facebook.fr/Toto");
         mNeighbourAboutMe.setText("Hello ! J'adore faire des blagues à gogo. Alors, si toi aussi t'es un rigolo, ajoute-moi en amigo !\n");
 
-
         mFavNeighbourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!mFavNeighbourButton.isActivated()) {
-                    String toastThis =  "Ajout de " + mNeighbourName.getText() + " réussi !";
+                    String toastThis = "Ajout de " + mNeighbourName.getText() + " aux favoris !";
                     Toast.makeText(NeighbourDetailActivity.this, toastThis, Toast.LENGTH_SHORT).show();
                     mFavNeighbourButton.setActivated(true);
                 } else {
-                    String toastThis =  "Retrait de " + mNeighbourName.getText() + " effectué.";
+                    String toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris.";
                     Toast.makeText(NeighbourDetailActivity.this, toastThis, Toast.LENGTH_SHORT).show();
                     mFavNeighbourButton.setActivated(false);
                 }
@@ -68,15 +67,9 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         });
     }
 
-
-    /**
-     * Used to navigate to this activity
-     *
-     * @param activity
-     */
-    public static void navigate(FragmentActivity activity) {
-        Intent intent = new Intent(activity, NeighbourDetailActivity.class);
-        //intent.putExtra(SELECTED_NEIGHBOUR, (Serializable) mNeighbour);
-        ActivityCompat.startActivity(activity, intent, null);
-    }
+    /*
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }*/
 }

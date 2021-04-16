@@ -8,12 +8,13 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 public class NeighbourDetailEvent {
 
     /**
-     * Neighbour to delete
+     * Neighbour to show details
      */
     public Neighbour neighbour;
 
     /**
      * Constructor.
+     *
      * @param neighbour
      */
     public NeighbourDetailEvent(Neighbour neighbour) {

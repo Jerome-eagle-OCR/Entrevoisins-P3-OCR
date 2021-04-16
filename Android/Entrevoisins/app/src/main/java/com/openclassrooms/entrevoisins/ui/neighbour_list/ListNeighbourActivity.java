@@ -13,8 +13,6 @@ import com.openclassrooms.entrevoisins.events.NeighbourDetailEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.Serializable;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,8 +54,13 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
     @Subscribe
     public void onClickNeighbour(NeighbourDetailEvent event) {
+        //Essai pour vérifier le bon fonctionnement de l'event (affichage du détail du voisin Toto pour mettre un peu de fun...
+        Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class);
+        startActivity(neighbourDetailActivityIntent);
+
+        /* Intent qui ne fonctionne pas avec le cast du event.neighbour en objet Serializable
         Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class);
         neighbourDetailActivityIntent.putExtra("NEIGHBOUR", (Serializable) event.neighbour);
-        startActivityForResult(neighbourDetailActivityIntent, NEIGHBOUR_DETAIL_ACTIVITY_REQUEST_CODE);
+        startActivityForResult(neighbourDetailActivityIntent, NEIGHBOUR_DETAIL_ACTIVITY_REQUEST_CODE);*/
     }
 }
