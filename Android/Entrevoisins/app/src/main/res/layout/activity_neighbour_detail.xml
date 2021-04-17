@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:theme="@style/AppTheme.NoActionBar"
     tools:context=".ui.neighbour_list.NeighbourDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -33,7 +34,7 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_width="match_parent"
+                android:layout_width="40dp"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="parallax"
                 app:navigationIcon="@drawable/abc_vector_test" />
@@ -42,8 +43,8 @@
                 android:id="@+id/tb_neighbour_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|left"
-                android:layout_marginLeft="12dp"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="12dp"
                 android:layout_marginBottom="24dp"
                 android:text="Caroline"
                 android:textColor="@android:color/white"

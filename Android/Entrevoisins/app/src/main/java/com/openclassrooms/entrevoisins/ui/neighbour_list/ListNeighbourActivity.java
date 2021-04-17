@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,15 +30,13 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
     ListNeighbourPagerAdapter mPagerAdapter;
 
-    public static final int NEIGHBOUR_DETAIL_ACTIVITY_REQUEST_CODE = 33;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_neighbour);
         ButterKnife.bind(this);
 
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this); // register activity in EventBus to subscribe events
 
         setSupportActionBar(mToolbar);
         mPagerAdapter = new ListNeighbourPagerAdapter(getSupportFragmentManager());
@@ -45,6 +44,13 @@ public class ListNeighbourActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        mToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class); //Toto easter egg
+                startActivity(neighbourDetailActivityIntent);
+            }
+        });
     }
 
     @OnClick(R.id.add_neighbour)
@@ -52,15 +58,15 @@ public class ListNeighbourActivity extends AppCompatActivity {
         AddNeighbourActivity.navigate(this);
     }
 
+    /**
+     * Fired if the user clicks on a neighbour item
+     *
+     * @param event
+     */
     @Subscribe
     public void onClickNeighbour(NeighbourDetailEvent event) {
-        //Essai pour vérifier le bon fonctionnement de l'event (affichage du détail du voisin Toto pour mettre un peu de fun...
         Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class);
+        neighbourDetailActivityIntent.putExtra("NEIGHBOUR", event.neighbour); //neighbour put as Serialized in Extra to display details of actual selected neighbour
         startActivity(neighbourDetailActivityIntent);
-
-        /* Intent qui ne fonctionne pas avec le cast du event.neighbour en objet Serializable
-        Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class);
-        neighbourDetailActivityIntent.putExtra("NEIGHBOUR", (Serializable) event.neighbour);
-        startActivityForResult(neighbourDetailActivityIntent, NEIGHBOUR_DETAIL_ACTIVITY_REQUEST_CODE);*/
     }
 }
