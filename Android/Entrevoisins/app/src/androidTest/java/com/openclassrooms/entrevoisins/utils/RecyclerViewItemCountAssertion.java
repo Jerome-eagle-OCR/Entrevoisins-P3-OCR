@@ -1,9 +1,13 @@
 package com.openclassrooms.entrevoisins.utils;
 
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.ViewAssertion;
-import android.support.v7.widget.RecyclerView;
+//import android.support.test.espresso.NoMatchingViewException;
+//import android.support.test.espresso.ViewAssertion;
+//import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewAssertion;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;

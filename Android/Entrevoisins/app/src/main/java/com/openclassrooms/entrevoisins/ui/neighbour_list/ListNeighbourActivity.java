@@ -2,17 +2,15 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.tabs.TabLayout;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.events.NeighbourDetailEvent;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,13 +28,13 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
     ListNeighbourPagerAdapter mPagerAdapter;
 
+    private int totoEasterEggCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_neighbour);
         ButterKnife.bind(this);
-
-        EventBus.getDefault().register(this); // register activity in EventBus to subscribe events
 
         setSupportActionBar(mToolbar);
         mPagerAdapter = new ListNeighbourPagerAdapter(getSupportFragmentManager());
@@ -47,8 +45,18 @@ public class ListNeighbourActivity extends AppCompatActivity {
         mToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class); //Toto easter egg
-                startActivity(neighbourDetailActivityIntent);
+                if (totoEasterEggCount == 6) {
+                    Toast.makeText(ListNeighbourActivity.this, "0 + 0 = ? ...", Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class); //Toto easter egg
+                            startActivity(neighbourDetailActivityIntent);
+                        }
+                    }, 2000);
+                } else {
+                    totoEasterEggCount++;
+                }
             }
         });
     }
@@ -56,17 +64,5 @@ public class ListNeighbourActivity extends AppCompatActivity {
     @OnClick(R.id.add_neighbour)
     void addNeighbour() {
         AddNeighbourActivity.navigate(this);
-    }
-
-    /**
-     * Fired if the user clicks on a neighbour item
-     *
-     * @param event
-     */
-    @Subscribe
-    public void onClickNeighbour(NeighbourDetailEvent event) {
-        Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class);
-        neighbourDetailActivityIntent.putExtra("NEIGHBOUR", event.neighbour); //neighbour put as Serialized in Extra to display details of actual selected neighbour
-        startActivity(neighbourDetailActivityIntent);
     }
 }

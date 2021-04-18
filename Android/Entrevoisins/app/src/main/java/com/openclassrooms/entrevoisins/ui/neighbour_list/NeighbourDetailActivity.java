@@ -1,12 +1,15 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -54,14 +57,14 @@ public class NeighbourDetailActivity extends AppCompatActivity {
 
         // get clicked neighbour from Extra
         Intent mIntent = getIntent();
-        mNeighbour = (Neighbour) mIntent.getSerializableExtra("NEIGHBOUR");
+        mNeighbour = (Neighbour) mIntent.getSerializableExtra("CLICKED_NEIGHBOUR");
 
         if (mNeighbour != null) {
             // Set details for clicked neighbour
             String clickedNeighbourName = mNeighbour.getName();
-            String clickedNeighbourFB = "www.facebook.fr/" + clickedNeighbourName; //create mock FB address based on neighbour name
+            String clickedNeighbourFB = "www.facebook.fr/" + clickedNeighbourName.toLowerCase(); //create mock FB address based on neighbour name
             String clickedNeighbourAM = mNeighbour.getAboutMe() + "\n"; //add extra line at the end of about me text
-            String improvedAvatar = mNeighbour.getAvatarUrl().replace("cc/150", "cc/480"); //get image with higher resolution (480p instead of 150p)
+            String improvedAvatar = mNeighbour.getAvatarUrl().replace("cc/150", "cc/320"); //get image with higher resolution (320p instead of 150p)
 
             Glide.with(this).load(improvedAvatar).into(mNeighbourPic);
             mTBNeighbourName.setText(clickedNeighbourName);
@@ -77,41 +80,42 @@ public class NeighbourDetailActivity extends AppCompatActivity {
             mNeighbourName.setText("Toto");
             mNeighbourLocation.setText("Totoville à 0km");
             mNeighbourPhone.setText("+33 0 00 00 00 00");
-            mNeighbourFB.setText("www.facebook.fr/Toto");
+            mNeighbourFB.setText("www.facebook.fr/toto");
             mNeighbourAboutMe.setText("Hello ! J'adore faire des blagues à gogo. Alors, si toi aussi t'es un rigolo, ajoute-moi en amigo !\n");
         }
 
-        //Test if neighbour already favorite and activate FAB if yes
+        //Test if neighbour already favorite and manage FAB consequently
         if (mFavoriteNeighbours.contains(mNeighbour)) {
             mFavNeighbourButton.setActivated(true);
+            //mFavNeighbourButton.setImageTintList(null);
+        } else {
+            mFavNeighbourButton.setActivated(false);
+            //mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_star_white_24dp));
         }
 
         //FAB listener to set or unset neighbour as favorite
         mFavNeighbourButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
                 if (!mFavNeighbourButton.isActivated()) {
                     String toastThis = "Ajout de " + mNeighbourName.getText() + " aux favoris !";
                     Toast.makeText(NeighbourDetailActivity.this, toastThis, Toast.LENGTH_SHORT).show();
                     mFavNeighbourButton.setActivated(true);
-                    if (!mFavoriteNeighbours.contains(mNeighbour)) {
-                        mFavoriteNeighbours.add(mNeighbour);
-                    }
+                    mFavNeighbourButton.setForegroundTintList(ColorStateList.valueOf(R.attr.colorControlHighlight));
+                    mFavoriteNeighbours.add(mNeighbour);
                 } else {
                     String toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris.";
                     Toast.makeText(NeighbourDetailActivity.this, toastThis, Toast.LENGTH_SHORT).show();
                     mFavNeighbourButton.setActivated(false);
+                    mFavNeighbourButton.setForegroundTintList(ColorStateList.valueOf(R.attr.colorControlNormal));
                     mFavoriteNeighbours.remove(mNeighbour);
                 }
             }
         });
 
-        mToolbar.setOnClickListener (new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent listNeighbourActivityIntent = new Intent(NeighbourDetailActivity.this, ListNeighbourActivity.class);
-                startActivity(listNeighbourActivityIntent);
-            }
-        });
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

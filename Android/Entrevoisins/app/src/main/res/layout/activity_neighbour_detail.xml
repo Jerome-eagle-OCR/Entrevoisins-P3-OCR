@@ -34,7 +34,7 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_width="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="parallax"
                 app:navigationIcon="@drawable/abc_vector_test" />
@@ -64,9 +64,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_star_white_24dp"
+        android:foreground="@drawable/ic_star_white_24dp"
         android:foregroundGravity="center"
-        app:backgroundTint="?android:attr/detailsElementBackground"
+        android:foregroundTint="?attr/colorButtonNormal"
+        app:backgroundTint="?attr/colorBackgroundFloating"
         app:elevation="10dp"
         app:fabSize="auto"
         app:layout_anchor="@id/appBarLayout"

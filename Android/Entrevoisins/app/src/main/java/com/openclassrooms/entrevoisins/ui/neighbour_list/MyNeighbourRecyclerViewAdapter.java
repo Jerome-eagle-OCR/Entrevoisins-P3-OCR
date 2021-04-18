@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
-import com.openclassrooms.entrevoisins.events.NeighbourDetailEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
@@ -57,7 +57,9 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new NeighbourDetailEvent(neighbour));
+                Intent neighbourDetailActivityIntent = new Intent(holder.itemView.getContext(), NeighbourDetailActivity.class);
+                neighbourDetailActivityIntent.putExtra("CLICKED_NEIGHBOUR", neighbour); //neighbour put in Extra (Serializable) to display details of actual selected neighbour
+                holder.itemView.getContext().startActivity(neighbourDetailActivityIntent);
             }
         });
     }
