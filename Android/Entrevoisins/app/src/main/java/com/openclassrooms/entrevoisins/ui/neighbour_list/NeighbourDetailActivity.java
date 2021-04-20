@@ -13,43 +13,44 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
-import java.util.ArrayList;
-import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class NeighbourDetailActivity extends AppCompatActivity {
 
-    private FloatingActionButton mFavNeighbourButton;
-    private ImageView mNeighbourPic;
-    private TextView mTBNeighbourName;
-    private TextView mNeighbourName;
-    private TextView mNeighbourLocation;
-    private TextView mNeighbourPhone;
-    private TextView mNeighbourFB;
-    private TextView mNeighbourAboutMe;
-    private Toolbar mToolbar;
+    @BindView(R.id.fav_neighbour_btn)
+    FloatingActionButton mFavNeighbourButton;
+    @BindView(R.id.neighbour_pic)
+    ImageView mNeighbourPic;
+    @BindView(R.id.tb_neighbour_name)
+    TextView mTBNeighbourName;
+    @BindView(R.id.neighbour_name)
+    TextView mNeighbourName;
+    @BindView(R.id.neighbour_location)
+    TextView mNeighbourLocation;
+    @BindView(R.id.neighbour_phone)
+    TextView mNeighbourPhone;
+    @BindView(R.id.neighbour_fb)
+    TextView mNeighbourFB;
+    @BindView(R.id.neighbour_aboutMe)
+    TextView mNeighbourAboutMe;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     private Neighbour mNeighbour;
-    private List<Neighbour> mFavoriteNeighbours;
+
+    private NeighbourApiService mApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neighbour_detail);
-
-        mFavoriteNeighbours = new ArrayList<>();
-
-        //Widgets wiring
-        mFavNeighbourButton = findViewById(R.id.fav_neighbour_btn);
-        mNeighbourPic = findViewById(R.id.neighbour_pic);
-        mTBNeighbourName = findViewById(R.id.tb_neighbour_name);
-        mNeighbourName = findViewById(R.id.neighbour_name);
-        mNeighbourLocation = findViewById(R.id.neighbour_location);
-        mNeighbourPhone = findViewById(R.id.neighbour_phone);
-        mNeighbourFB = findViewById(R.id.neighbour_fb);
-        mNeighbourAboutMe = findViewById(R.id.neighbour_aboutMe);
-        mToolbar = findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
+        mApiService = DI.getNeighbourApiService();
 
         //Configure action bar
         setSupportActionBar(mToolbar);
@@ -87,30 +88,35 @@ public class NeighbourDetailActivity extends AppCompatActivity {
 
         //Test if neighbour is already favorite and manage FAB consequently
         //TODO:delete "!" in if condition
-        if (!mFavoriteNeighbours.contains(mNeighbour)) {
+        if (mApiService.getFavoriteNeighbours().contains(mNeighbour)) {
             mFavNeighbourButton.setActivated(true);
             //TODO:change FAB star color
-            mFavNeighbourButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_yellow_star_24));
+            mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
         } else {
             mFavNeighbourButton.setActivated(false);
+            mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
         }
 
         //FAB listener to set or unset neighbour as favorite
         mFavNeighbourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mFavNeighbourButton.isActivated()) {
+                if (!mFavNeighbourButton.isActivated() && !mNeighbourName.getText().equals("Toto")) {
                     String toastThis = "Ajout de " + mNeighbourName.getText() + " aux favoris !";
                     Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).show();
                     mFavNeighbourButton.setActivated(true);
-                    //TODO:change FAB star color
-                    mFavoriteNeighbours.add(mNeighbour);
+                    mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
+                    mApiService.addFavoriteNeighbour(mNeighbour);
                 } else {
-                    String toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris.";
-                    Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).show();
-                    mFavNeighbourButton.setActivated(false);
-                    //TODO:change FAB star color
-                    mFavoriteNeighbours.remove(mNeighbour);
+                    if (mNeighbourName.getText().equals("Toto")) {
+                        Snackbar.make(view, "Toto est un farceur, tu ne peux pas l'ajouter en amigo...", Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        String toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris.";
+                        Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).show();
+                        mFavNeighbourButton.setActivated(false);
+                        mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
+                        mApiService.removeFavoriteNeighbour(mNeighbour);
+                    }
                 }
             }
         });
