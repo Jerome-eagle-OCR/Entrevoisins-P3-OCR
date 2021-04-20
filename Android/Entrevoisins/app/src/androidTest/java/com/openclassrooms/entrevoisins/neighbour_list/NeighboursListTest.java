@@ -1,8 +1,4 @@
-
 package com.openclassrooms.entrevoisins.neighbour_list;
-
-//import android.support.test.espresso.contrib.RecyclerViewActions;
-//import android.support.test.espresso.matcher.ViewMatchers;
 
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -24,14 +20,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.core.IsNull.notNullValue;
-
-//import android.support.test.rule.ActivityTestRule;
-//import android.support.test.runner.AndroidJUnit4;
-//import static android.support.test.espresso.Espresso.onView;
-//import static android.support.test.espresso.assertion.ViewAssertions.matches;
-//import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
-//import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
-
 
 
 /**
@@ -76,6 +64,6 @@ public class NeighboursListTest {
         onView(ViewMatchers.withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
+        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT - 1));
     }
 }

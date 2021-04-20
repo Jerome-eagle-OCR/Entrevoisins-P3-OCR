@@ -45,17 +45,21 @@ public class ListNeighbourActivity extends AppCompatActivity {
         mToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (totoEasterEggCount == 6) {
-                    Toast.makeText(ListNeighbourActivity.this, "0 + 0 = ? ...", Toast.LENGTH_SHORT).show();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class); //Toto easter egg
-                            startActivity(neighbourDetailActivityIntent);
-                        }
-                    }, 2000);
-                } else {
-                    totoEasterEggCount++;
+                switch (totoEasterEggCount) {
+                    case 6:
+                        Toast.makeText(ListNeighbourActivity.this, "0 + 0 = ?", Toast.LENGTH_SHORT).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class); //Toto easter egg
+                                startActivity(neighbourDetailActivityIntent);
+                            }
+                        }, 2000);
+                        break;
+                    case 2:
+                        Toast.makeText(ListNeighbourActivity.this, "Vous êtes maintenant à 4 clics de la surprise !", Toast.LENGTH_SHORT).show();
+                    default:
+                        totoEasterEggCount++;
                 }
             }
         });
