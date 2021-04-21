@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
@@ -105,16 +106,16 @@ public class NeighbourDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!mFavNeighbourButton.isActivated() && !mNeighbourName.getText().equals("Toto")) {
                     String toastThis = "Ajout de " + mNeighbourName.getText() + " aux favoris !";
-                    Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                     mFavNeighbourButton.setActivated(true);
                     mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
                     mApiService.addFavoriteNeighbour(mNeighbour);
                 } else {
                     if (mNeighbourName.getText().equals("Toto")) {
-                        Snackbar.make(view, "Toto est un farceur, tu ne peux pas l'ajouter en amigo...", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view, "Toto est un farceur !\nTu ne peux pas l'ajouter en amigo...", Snackbar.LENGTH_SHORT).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorAccent)).show();
                     } else {
                         String toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris.";
-                        Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                         mFavNeighbourButton.setActivated(false);
                         mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
                         mApiService.removeFavoriteNeighbour(mNeighbour);

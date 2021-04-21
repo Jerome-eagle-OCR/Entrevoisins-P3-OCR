@@ -25,7 +25,6 @@ import java.util.List;
 
 public class NeighbourFragment extends Fragment {
 
-    private static int mFragmentPosition;
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
@@ -36,8 +35,7 @@ public class NeighbourFragment extends Fragment {
      *
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance(int fragmentPosition) {
-        mFragmentPosition = fragmentPosition;
+    public static NeighbourFragment newInstance() {
         NeighbourFragment fragment = new NeighbourFragment();
         return fragment;
     }
@@ -63,10 +61,10 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        if ( mFragmentPosition== 1) {
-            mNeighbours = mApiService.getNeighbours();
-        } else {
+        if (ListNeighbourPagerAdapter.isFavoriteFragment()) {
             mNeighbours = mApiService.getFavoriteNeighbours();
+        } else {
+            mNeighbours = mApiService.getNeighbours();
         }
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
     }
