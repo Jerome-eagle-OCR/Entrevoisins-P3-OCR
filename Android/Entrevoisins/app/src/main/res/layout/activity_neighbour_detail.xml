@@ -69,6 +69,6 @@
         app:fabSize="auto"
         app:layout_anchor="@id/appBarLayout"
         app:layout_anchorGravity="bottom|end"
-        tools:src="@drawable/ic_grey_star_24" />
+        tools:src="@drawable/ic_yellow_star_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
