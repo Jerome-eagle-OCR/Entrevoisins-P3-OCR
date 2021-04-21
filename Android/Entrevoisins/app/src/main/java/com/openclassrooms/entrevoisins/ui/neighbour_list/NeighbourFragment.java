@@ -63,7 +63,7 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        if ( mFragmentPosition== 1) {
+        if ( mFragmentPosition== 0) {
             mNeighbours = mApiService.getNeighbours();
         } else {
             mNeighbours = mApiService.getFavoriteNeighbours();
