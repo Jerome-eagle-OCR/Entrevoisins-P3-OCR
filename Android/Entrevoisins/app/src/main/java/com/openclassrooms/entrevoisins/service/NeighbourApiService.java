@@ -38,12 +38,14 @@ public interface NeighbourApiService {
 
     /**
      * Add new favorite to favorite neighbours list
+     *
      * @param selectedNeighbour neighbour to add in favorite list
      */
     void addFavoriteNeighbour(Neighbour selectedNeighbour);
 
     /**
      * Remove favorite from favorite neighbours list
+     *
      * @param selectedNeighbour neighbour to remove from favorite list
      */
     void removeFavoriteNeighbour(Neighbour selectedNeighbour);

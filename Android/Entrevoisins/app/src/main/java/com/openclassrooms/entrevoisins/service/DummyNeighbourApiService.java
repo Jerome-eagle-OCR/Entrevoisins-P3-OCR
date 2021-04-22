@@ -42,6 +42,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
 
     /**
      * Get list of favorite neighbours
+     *
      * @return list
      */
     @Override
@@ -51,6 +52,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
 
     /**
      * Add neighbour in favorite list
+     *
      * @param selectedNeighbour
      */
     @Override
@@ -60,6 +62,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
 
     /**
      * Remove neighbour from favorite list
+     *
      * @param selectedNeighbour
      */
     @Override
