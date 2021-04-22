@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -118,14 +119,15 @@ public class NeighbourDetailActivity extends AppCompatActivity {
                     if (mNeighbourName.getText().equals("Toto")) {
                         Snackbar.make(view, "Toto est un farceur !\nTu ne peux pas l'ajouter en amigo...", Snackbar.LENGTH_INDEFINITE).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorAccent)).show();
                         mFavNeighbourButton.setVisibility(view.GONE);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                         mTotoJoke = true;
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                mTotoJoke = false;
                                 AlertDialog.Builder builder = new AlertDialog.Builder(NeighbourDetailActivity.this);
 
                                 builder.setTitle("Encore une blague de Toto...")
+                                        .setCancelable(false)
                                         .setMessage("Appuie sur OK pour revenir à la liste de voisins")
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
@@ -138,8 +140,9 @@ public class NeighbourDetailActivity extends AppCompatActivity {
                                         })
                                         .create()
                                         .show();
+                                mTotoJoke = false;
                             }
-                        }, 10000);
+                        }, 7000);
                     } else {
                         String toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris.";
                         Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
@@ -155,5 +158,10 @@ public class NeighbourDetailActivity extends AppCompatActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return (!mTotoJoke) && super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        return (!mTotoJoke) && super.dispatchKeyEvent(event);
     }
 }

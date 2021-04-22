@@ -28,18 +28,16 @@ public class NeighbourFragment extends Fragment {
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
-
+    private int mFragmentPosition;
 
     /**
      * Create and return a new instance
      *
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance(int position) {
+    public static NeighbourFragment newInstance(int fragmentPosition) {
         NeighbourFragment fragment = new NeighbourFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("FRAGMENT_POSITION", position);
-        fragment.setArguments(bundle);
+        fragment.mFragmentPosition = fragmentPosition;
         return fragment;
     }
 
@@ -64,7 +62,7 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        if (getArguments().getInt("FRAGMENT_POSITION") == 0) {
+        if ( this.mFragmentPosition == 0) {
             mNeighbours = mApiService.getNeighbours();
         } else {
             mNeighbours = mApiService.getFavoriteNeighbours();
