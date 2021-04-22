@@ -35,8 +35,11 @@ public class NeighbourFragment extends Fragment {
      *
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(int position) {
         NeighbourFragment fragment = new NeighbourFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("FRAGMENT_POSITION", position);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -61,10 +64,10 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        if (ListNeighbourPagerAdapter.isFavoriteFragment()) {
-            mNeighbours = mApiService.getFavoriteNeighbours();
-        } else {
+        if (getArguments().getInt("FRAGMENT_POSITION") == 0) {
             mNeighbours = mApiService.getNeighbours();
+        } else {
+            mNeighbours = mApiService.getFavoriteNeighbours();
         }
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
     }

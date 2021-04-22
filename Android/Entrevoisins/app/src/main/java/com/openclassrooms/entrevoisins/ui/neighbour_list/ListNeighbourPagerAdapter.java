@@ -11,12 +11,6 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
-    private static boolean favoriteFragment;
-
-    public static boolean isFavoriteFragment() {
-        return favoriteFragment;
-    }
-
     /**
      * getItem is called to instantiate the fragment for the given page.
      *
@@ -25,12 +19,7 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            favoriteFragment = false;
-        } else {
-            favoriteFragment = true;
-        }
-        return NeighbourFragment.newInstance();
+        return NeighbourFragment.newInstance(position);
     }
 
     /**
