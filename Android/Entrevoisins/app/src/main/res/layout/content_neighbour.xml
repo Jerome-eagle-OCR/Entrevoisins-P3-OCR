@@ -38,48 +38,50 @@
                     android:layout_weight="1"
                     android:background="?android:attr/colorBackground"
                     android:elegantTextHeight="true"
-                    android:elevation="1dp"
+                    android:elevation="0.5dp"
                     android:gravity="bottom"
                     android:paddingStart="12dp"
-                    android:text="Caroline"
+                    android:paddingEnd="12dp"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:text="Caroline" />
 
                 <TextView
                     android:id="@+id/neighbour_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
                     android:layout_weight="1.5"
                     android:drawableStart="@drawable/ic_baseline_location_on_24"
                     android:drawablePadding="16dp"
                     android:drawableTint="@color/colorAccent"
                     android:gravity="center|left"
-                    android:text="Saint pierre du mont à 5km"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="16sp"
-                    android:textStyle="normal" />
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    tools:text="Saint pierre du mont à 5km" />
 
                 <TextView
                     android:id="@+id/neighbour_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
                     android:layout_weight="1.5"
                     android:drawableStart="@drawable/ic_baseline_local_phone_24"
                     android:drawablePadding="16dp"
                     android:drawableTint="@color/colorAccent"
                     android:gravity="center|left"
-                    android:text="+33 6 86 57 90 14"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="16sp"
-                    android:textStyle="normal" />
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    tools:text="+33 6 86 57 90 14" />
 
                 <TextView
                     android:id="@+id/neighbour_fb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
                     android:layout_weight="1.5"
                     android:drawableStart="@drawable/ic_baseline_language_24"
                     android:drawablePadding="16dp"
@@ -88,10 +90,12 @@
                     android:fontFamily="sans-serif"
                     android:freezesText="false"
                     android:gravity="center|left"
-                    android:text="www.facebook.fr/Caroline"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="16sp"
-                    android:textStyle="normal" />
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    tools:text="www.facebook.fr/caroline" />
 
             </LinearLayout>
 
@@ -120,9 +124,10 @@
                     android:layout_gravity="top"
                     android:background="?android:attr/colorBackground"
                     android:elegantTextHeight="true"
-                    android:elevation="1dp"
+                    android:elevation="0.5dp"
                     android:gravity="bottom"
                     android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:text="A propos de moi"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="24sp" />
@@ -131,12 +136,13 @@
                     android:id="@+id/neighbour_aboutMe"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
                     android:layout_marginTop="12dp"
-                    android:text="Bonjour !Je souhaiterais faire de la marche nordique.\ Pas initiée, je recherche une ou plusieurs personnes susceptiblesde m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..\n"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="16sp"
-                    android:textStyle="normal" />
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    tools:text="Bonjour !Je souhaiterais faire de la marche nordique. Pas initiée, je recherche une ou plusieurs personnes susceptibles de m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..\n" />
 
             </LinearLayout>
 

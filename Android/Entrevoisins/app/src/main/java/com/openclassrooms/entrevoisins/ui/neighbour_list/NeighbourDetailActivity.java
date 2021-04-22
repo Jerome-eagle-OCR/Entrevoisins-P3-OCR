@@ -1,11 +1,15 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -45,6 +49,8 @@ public class NeighbourDetailActivity extends AppCompatActivity {
     private Neighbour mNeighbour;
 
     private NeighbourApiService mApiService;
+
+    private boolean mTotoJoke;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +116,30 @@ public class NeighbourDetailActivity extends AppCompatActivity {
                     mApiService.addFavoriteNeighbour(mNeighbour);
                 } else {
                     if (mNeighbourName.getText().equals("Toto")) {
-                        Snackbar.make(view, "Toto est un farceur !\nTu ne peux pas l'ajouter en amigo...", Snackbar.LENGTH_SHORT).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorAccent)).show();
+                        Snackbar.make(view, "Toto est un farceur !\nTu ne peux pas l'ajouter en amigo...", Snackbar.LENGTH_INDEFINITE).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorAccent)).show();
+                        mFavNeighbourButton.setVisibility(view.GONE);
+                        mTotoJoke = true;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mTotoJoke = false;
+                                AlertDialog.Builder builder = new AlertDialog.Builder(NeighbourDetailActivity.this);
+
+                                builder.setTitle("Encore une blague de Toto...")
+                                        .setMessage("Appuie sur OK pour revenir à la liste de voisins")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // Ends game activity
+                                                Intent intent = new Intent();
+                                                setResult(RESULT_OK, intent);
+                                                finish();
+                                            }
+                                        })
+                                        .create()
+                                        .show();
+                            }
+                        }, 10000);
                     } else {
                         String toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris.";
                         Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
@@ -121,5 +150,10 @@ public class NeighbourDetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return (!mTotoJoke) && super.dispatchTouchEvent(ev);
     }
 }
