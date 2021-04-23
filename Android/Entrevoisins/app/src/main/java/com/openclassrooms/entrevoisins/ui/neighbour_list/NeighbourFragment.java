@@ -62,7 +62,7 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        if ( this.mFragmentPosition == 0) {
+        if (this.mFragmentPosition == 0) {
             mNeighbours = mApiService.getNeighbours();
         } else {
             mNeighbours = mApiService.getFavoriteNeighbours();
@@ -96,7 +96,6 @@ public class NeighbourFragment extends Fragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
-        mApiService.removeFavoriteNeighbour(event.neighbour);
         initList();
     }
 }

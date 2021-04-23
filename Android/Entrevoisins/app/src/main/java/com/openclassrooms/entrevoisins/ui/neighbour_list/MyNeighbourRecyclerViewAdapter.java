@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,6 +28,8 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
+
+    private NeighbourApiService mApiService;
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         mNeighbours = items;
@@ -58,8 +62,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mApiService = DI.getNeighbourApiService();
+                int clickedNeighbourIndexInList = mApiService.getNeighbours().indexOf(neighbour); //Retrieve index of clicked neighbour in repository neighbours list
                 Intent neighbourDetailActivityIntent = new Intent(holder.itemView.getContext(), NeighbourDetailActivity.class);
-                neighbourDetailActivityIntent.putExtra("CLICKED_NEIGHBOUR", neighbour); //Neighbour put in Extra (Serializable) to display details of selected neighbour
+                neighbourDetailActivityIntent.putExtra("CLICKED_NEIGHBOUR_INDEX_IN_LIST", clickedNeighbourIndexInList); //Neighbour put in Extra (Serializable) to display details of selected neighbour
                 holder.itemView.getContext().startActivity(neighbourDetailActivityIntent);
             }
         });

@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test on Neighbour service
@@ -58,12 +57,15 @@ public class NeighbourServiceTest {
          * Second possible test
          */
         //Given : new service (@Before)
-        //When : create favoriteNeighbours list _using getFavoriteNeighbours()_ and add dummy neighbour (0) in the list with "legacy" method,
+        //When : create favoriteNeighbours list _using getFavoriteNeighbours()_ and add last dummy neighbour in the list with "legacy" method,
         //Then : retrieved favorite list _using getFavoriteNeighbours()_ equals expected list
-        List<Neighbour> favoriteNeighbours = service.getFavoriteNeighbours();
-        favoriteNeighbours.add(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0));
-        List<Neighbour> expectedFavoriteNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.subList(0, 1);
+        int dummyListSize = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.size();
+        DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(dummyListSize - 1).setFavori(true);
+        List<Neighbour> expectedFavoriteNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.subList(dummyListSize - 1, dummyListSize);
+        List<Neighbour> testList = service.getFavoriteNeighbours();
+        testList = service.getFavoriteNeighbours();
         assertEquals(service.getFavoriteNeighbours(), expectedFavoriteNeighbours);
+
         /**
          * Third possible test is a combination of the two first possible tests
          */
@@ -72,12 +74,11 @@ public class NeighbourServiceTest {
     @Test
     public void addFavoriteNeighbourWithSuccess() {
         //Given : new service (@Before)
-        //When : add dummy neighbours (0) and (1) _using addFavoriteNeighbour()_
+        //When : add dummy neighbours (0) two times _using addFavoriteNeighbour()_
         //Then : retrieved favorite list _using previously validated getFavoriteNeighbours()_ equals expected list
         service.addFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0));
-        service.addFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(1));
-        List<Neighbour> expectedFavoriteNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.subList(0, 2);
-        assertTrue(service.getFavoriteNeighbours().containsAll(expectedFavoriteNeighbours));
+        List<Neighbour> expectedFavoriteNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.subList(0, 1);
+        assertEquals(service.getFavoriteNeighbours(), expectedFavoriteNeighbours);
     }
 
     @Test

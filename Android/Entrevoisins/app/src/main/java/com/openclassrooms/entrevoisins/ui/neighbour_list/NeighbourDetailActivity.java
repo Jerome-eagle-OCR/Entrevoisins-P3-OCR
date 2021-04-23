@@ -65,9 +65,14 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Get clicked neighbour from Extra
+        //Get clicked neighbour index in list from Extra
         Intent mIntent = getIntent();
-        mNeighbour = (Neighbour) mIntent.getSerializableExtra("CLICKED_NEIGHBOUR");
+        int mClickedNeighbourIndexInList = mIntent.getIntExtra("CLICKED_NEIGHBOUR_INDEX_IN_LIST", -1);
+        if (mClickedNeighbourIndexInList == -1) {
+            mNeighbour = null;
+        } else {
+            mNeighbour = mApiService.getNeighbours().get(mClickedNeighbourIndexInList);
+        }
 
         if (mNeighbour != null) {
             // Set details for clicked neighbour
@@ -95,7 +100,7 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         }
 
         //Test if neighbour is already favorite and manage FAB consequently
-        if (mApiService.getFavoriteNeighbours().contains(mNeighbour)) {
+        if (mNeighbour.getFavori()) {
             mFavNeighbourButton.setActivated(true);
             mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
         } else {
