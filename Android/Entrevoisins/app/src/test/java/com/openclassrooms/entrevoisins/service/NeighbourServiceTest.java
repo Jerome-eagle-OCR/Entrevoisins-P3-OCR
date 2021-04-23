@@ -46,26 +46,47 @@ public class NeighbourServiceTest {
 
     @Test
     public void getFavoriteNeighboursWithSuccess() {
-        List<Neighbour> favoriteNeighbours = service.getFavoriteNeighbours(); //Create favorite list using method to test
-        favoriteNeighbours.add(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0)); //Add first neighbour of dummy list in favorite list (using List .add method)
-        List<Neighbour> expectedFavoriteNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.subList(0, 1); //Create expected favorite list with only first neighbour of dummy list
-        assertEquals(service.getFavoriteNeighbours(), expectedFavoriteNeighbours); //Assert retrieved favorite list using method to test equals expected list
+        /**
+         * First possible test
+         */
+        //Given : new service (@Before)
+        //When : get favorite neighbours _using getFavoriteNeighbours()_
+        //Then : an empty list is properly returned (non null)
+        assertThrows(IndexOutOfBoundsException.class, () -> service.getFavoriteNeighbours().get(0));
+
+        /**
+         * Second possible test
+         */
+        //Given : new service (@Before)
+        //When : create favoriteNeighbours list _using getFavoriteNeighbours()_ and add dummy neighbour (0) in the list with "legacy" method,
+        //Then : retrieved favorite list _using getFavoriteNeighbours()_ equals expected list
+        List<Neighbour> favoriteNeighbours = service.getFavoriteNeighbours();
+        favoriteNeighbours.add(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0));
+        List<Neighbour> expectedFavoriteNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.subList(0, 1);
+        assertEquals(service.getFavoriteNeighbours(), expectedFavoriteNeighbours);
+        /**
+         * Third possible test is a combination of the two first possible tests
+         */
     }
 
     @Test
     public void addFavoriteNeighbourWithSuccess() {
-        service.addFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0)); //Add first neighbour of dummy list in favorite list using method to test
-        service.addFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(1)); //Add second neighbour of dummy list in favorite list using method to test
-        List<Neighbour> favoriteNeighbours = service.getFavoriteNeighbours(); //Retrieve favorite list in favoriteNeighbours list using previously validated method
-        List<Neighbour> expectedFavoriteNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.subList(0, 2); //Create expected favorite list with only 2 firsts neighbours of dummy list
-        assertTrue(favoriteNeighbours.containsAll(expectedFavoriteNeighbours)); //Assert lists are equal
+        //Given : new service (@Before)
+        //When : add dummy neighbours (0) and (1) _using addFavoriteNeighbour()_
+        //Then : retrieved favorite list _using previously validated getFavoriteNeighbours()_ equals expected list
+        service.addFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0));
+        service.addFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(1));
+        List<Neighbour> expectedFavoriteNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.subList(0, 2);
+        assertTrue(service.getFavoriteNeighbours().containsAll(expectedFavoriteNeighbours));
     }
 
     @Test
     public void removeFavoriteNeighbourWithSuccess() {
-        assertThrows(IndexOutOfBoundsException.class, () -> service.getFavoriteNeighbours().get(0));  //Assert list is not null and is empty
-        service.addFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0)); //Add first neighbour of dummy list in favorite list using previously validated method
-        service.removeFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0)); //Remove same neighbour using method to test
-        assertThrows(IndexOutOfBoundsException.class, () -> service.getFavoriteNeighbours().get(0)); //Assert that list is empty again
+        //Given : new service (@Before) and dummy neighbour (0) added in favorites _using previously validated addFavoriteNeighbour()_
+        //When : remove dummy neighbour (0) _using removeFavoriteNeighbour()_
+        //Then : list retrieved _using previously validated getFavoriteNeighbours()_ is empty
+        service.addFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0));
+        service.removeFavoriteNeighbour(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> service.getFavoriteNeighbours().get(0));
     }
 }

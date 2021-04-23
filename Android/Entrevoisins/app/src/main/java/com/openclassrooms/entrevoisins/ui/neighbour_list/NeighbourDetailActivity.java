@@ -95,10 +95,8 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         }
 
         //Test if neighbour is already favorite and manage FAB consequently
-        //TODO:delete "!" in if condition
         if (mApiService.getFavoriteNeighbours().contains(mNeighbour)) {
             mFavNeighbourButton.setActivated(true);
-            //TODO:change FAB star color
             mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
         } else {
             mFavNeighbourButton.setActivated(false);
