@@ -46,32 +46,35 @@ public class DummyNeighbourApiService implements NeighbourApiService {
      */
     @Override
     public List<Neighbour> getFavoriteNeighbours() {
+
         List<Neighbour> favoriteNeighbours = new ArrayList<>();
         for (int i = 0; i < neighbours.size(); i++) {
-            if (neighbours.get(i).getFavori()) {
+            if (neighbours.get(i).getIsFavorite()) {
                 favoriteNeighbours.add(neighbours.get(i));
             }
         }
+        //Could be used instead but requires Nougat at least while app allows Lollipop as minimum :
+        //List<Neighbour> favoriteNeighbours = neighbours.stream().filter(neighbour -> neighbour.getFavorite() == true).collect(Collectors.toList());
         return favoriteNeighbours;
     }
 
     /**
      * Add neighbour in favorite list
      *
-     * @param selectedNeighbour
+     * @param neighbour
      */
     @Override
-    public void addFavoriteNeighbour(Neighbour selectedNeighbour) {
-        selectedNeighbour.setFavori(true);
+    public void addFavoriteNeighbour(Neighbour neighbour) {
+        neighbour.setIsFavorite(true);
     }
 
     /**
      * Remove neighbour from favorite list
      *
-     * @param selectedNeighbour
+     * @param neighbour
      */
     @Override
-    public void removeFavoriteNeighbour(Neighbour selectedNeighbour) {
-        selectedNeighbour.setFavori(false);
+    public void removeFavoriteNeighbour(Neighbour neighbour) {
+        neighbour.setIsFavorite(false);
     }
 }

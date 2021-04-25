@@ -3,6 +3,8 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,7 +30,9 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
     ListNeighbourPagerAdapter mPagerAdapter;
 
-    private int totoEasterEggCount = 0;
+    private int totoJokeCount = 0;
+    private boolean mTotoJoke = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class ListNeighbourActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
+
         mPagerAdapter = new ListNeighbourPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
@@ -45,28 +50,52 @@ public class ListNeighbourActivity extends AppCompatActivity {
         mToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (totoEasterEggCount) {
-                    case 6:
-                        Toast.makeText(ListNeighbourActivity.this, "0 + 0 = ?", Toast.LENGTH_SHORT).show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class); //Toto easter egg
-                                startActivity(neighbourDetailActivityIntent);
-                            }
-                        }, 2000);
-                        break;
-                    case 2:
-                        Toast.makeText(ListNeighbourActivity.this, "Vous êtes maintenant à 4 clics de la surprise !", Toast.LENGTH_SHORT).show();
-                    default:
-                        totoEasterEggCount++;
-                }
+                totoJokeCount();
             }
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTotoJoke = false;
+        totoJokeCount = 0;
     }
 
     @OnClick(R.id.add_neighbour)
     void addNeighbour() {
         AddNeighbourActivity.navigate(this);
     }
+
+    private void totoJokeCount() {
+        switch (totoJokeCount) {
+            case 6:
+                mTotoJoke = true;
+                Toast.makeText(ListNeighbourActivity.this, "0 + 0 = ?", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class); //Toto easter egg
+                        startActivity(neighbourDetailActivityIntent);
+                    }
+                }, 2000);
+                break;
+            case 2:
+                Toast.makeText(ListNeighbourActivity.this, "Vous êtes maintenant à 4 clics de la surprise !", Toast.LENGTH_SHORT).show();
+            default:
+                totoJokeCount++;
+        }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return (!mTotoJoke) && super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        return (!mTotoJoke) && super.dispatchKeyEvent(event);
+    }
 }
+

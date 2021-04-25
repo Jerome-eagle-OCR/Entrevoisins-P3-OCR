@@ -63,9 +63,9 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View v) {
                 mApiService = DI.getNeighbourApiService();
-                int clickedNeighbourIndexInList = mApiService.getNeighbours().indexOf(neighbour); //Retrieve index of clicked neighbour in repository neighbours list
+                int clickedNeighbourIndexInList = mApiService.getNeighbours().indexOf(neighbour); //Retrieve index of clicked neighbour in neighbours' list
                 Intent neighbourDetailActivityIntent = new Intent(holder.itemView.getContext(), NeighbourDetailActivity.class);
-                neighbourDetailActivityIntent.putExtra("CLICKED_NEIGHBOUR_INDEX_IN_LIST", clickedNeighbourIndexInList); //Neighbour put in Extra (Serializable) to display details of selected neighbour
+                neighbourDetailActivityIntent.putExtra("CLICKED_NEIGHBOUR_INDEX_IN_LIST", clickedNeighbourIndexInList); //Index put in Extra to display details of actual selected neighbour
                 holder.itemView.getContext().startActivity(neighbourDetailActivityIntent);
             }
         });

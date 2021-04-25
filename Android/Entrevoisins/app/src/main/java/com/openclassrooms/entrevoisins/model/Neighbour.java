@@ -40,7 +40,7 @@ public class Neighbour {
     /**
      * Favorite status
      */
-    private Boolean favori = false;
+    private Boolean isFavorite = false;
 
     /**
      * Constructor
@@ -107,12 +107,12 @@ public class Neighbour {
         this.aboutMe = aboutMe;
     }
 
-    public Boolean getFavori() {
-        return favori;
+    public Boolean getIsFavorite() {
+        return isFavorite;
     }
 
-    public void setFavori(Boolean favori) {
-        this.favori = favori;
+    public void setIsFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
     @Override
