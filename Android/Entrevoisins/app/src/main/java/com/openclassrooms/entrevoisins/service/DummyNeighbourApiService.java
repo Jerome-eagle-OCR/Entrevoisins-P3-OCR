@@ -64,7 +64,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
      * @param neighbour
      */
     @Override
-    public void addFavoriteNeighbour(Neighbour neighbour) {
+    public void addNeighbourToFavorites(Neighbour neighbour) {
         neighbour.setIsFavorite(true);
     }
 
@@ -74,7 +74,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
      * @param neighbour
      */
     @Override
-    public void removeFavoriteNeighbour(Neighbour neighbour) {
+    public void removeNeighbourFromFavorites(Neighbour neighbour) {
         neighbour.setIsFavorite(false);
     }
 }

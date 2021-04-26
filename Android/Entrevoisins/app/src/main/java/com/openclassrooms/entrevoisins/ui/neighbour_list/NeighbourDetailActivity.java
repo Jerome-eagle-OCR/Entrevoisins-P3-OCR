@@ -154,7 +154,7 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         }
         mFavNeighbourButton.setActivated(true);
         mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
-        mApiService.addFavoriteNeighbour(mNeighbour);
+        mApiService.addNeighbourToFavorites(mNeighbour);
     }
 
     private void removeFromFavorites(View view) {
@@ -167,7 +167,7 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         }
         mFavNeighbourButton.setActivated(false);
         mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
-        mApiService.removeFavoriteNeighbour(mNeighbour);
+        mApiService.removeNeighbourFromFavorites(mNeighbour);
     }
 
     private void snackBarThis(String toastThis, View view) {

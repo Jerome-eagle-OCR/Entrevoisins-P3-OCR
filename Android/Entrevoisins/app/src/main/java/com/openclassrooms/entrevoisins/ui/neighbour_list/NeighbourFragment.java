@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +31,8 @@ public class NeighbourFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private int mFragmentPosition;
 
+    public static final String BUNDLE_STATE_FRAGMENT_POSITION = "currentFragment";
+
     /**
      * Create and return a new instance
      *
@@ -44,6 +47,9 @@ public class NeighbourFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null) {
+            mFragmentPosition = savedInstanceState.getInt(BUNDLE_STATE_FRAGMENT_POSITION);
+        }
         mApiService = DI.getNeighbourApiService();
     }
 
@@ -97,5 +103,11 @@ public class NeighbourFragment extends Fragment {
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(BUNDLE_STATE_FRAGMENT_POSITION, mFragmentPosition);
+        super.onSaveInstanceState(outState);
     }
 }
