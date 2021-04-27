@@ -15,10 +15,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 
@@ -65,5 +69,15 @@ public class NeighboursListTest {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
         onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT - 1));
+    }
+
+    @Test
+    public void myNeighbourList_clickOnNeighbour_shouldDisplayNeighbourDetails() {
+        //Given : We pick a neighbour item in the list to see his/her details
+        onView(allOf(withId(R.id.container)...  //La liste générale de voisins est bien affichée
+        //When : We perform a click anywhere on the item but the delete button
+        onView(ViewMatchers.withId(R.id.list_neighbours)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        //Then : The neighbour details page displays
+        onView(ViewMatchers.withId(R.id.neighbour_details)).check(matches(isDisplayed()));
     }
 }

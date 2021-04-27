@@ -11,11 +11,9 @@ import org.junit.runners.JUnit4;
 
 import java.util.List;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -73,6 +71,7 @@ public class NeighbourServiceTest {
         //Given : first neighbour added in favorites _using previously validated addFavoriteNeighbour()_
         //When : remove neighbour from favorites _using removeFavoriteNeighbour()_
         //Then : list retrieved _using previously validated getFavoriteNeighbours()_ does not contain removed neighbour
+        service.getNeighbours().get(0).setIsFavorite(false);
         service.addNeighbourToFavorites(service.getNeighbours().get(0));
         service.removeNeighbourFromFavorites(service.getNeighbours().get(0));
         assertFalse(service.getFavoriteNeighbours().contains(service.getNeighbours().get(0)));

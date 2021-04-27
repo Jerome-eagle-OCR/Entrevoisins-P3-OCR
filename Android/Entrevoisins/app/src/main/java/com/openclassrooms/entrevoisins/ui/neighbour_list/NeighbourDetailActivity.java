@@ -49,7 +49,7 @@ public class NeighbourDetailActivity extends AppCompatActivity {
     private Neighbour mNeighbour;
     private NeighbourApiService mApiService;
     private boolean mTotoJoke;
-    private boolean isStartingWithVowel;
+    private boolean mIsVowelStartingName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +87,8 @@ public class NeighbourDetailActivity extends AppCompatActivity {
             setTotoDetails();
         }
 
-        //Boolean to adjust message depending on firstname first letter
-        isStartingWithVowel = "AEIOUY".contains(Character.toString(mNeighbourName.getText().toString().charAt(0))) ||
+        //Set boolean to adjust message depending on firstname first letter
+        mIsVowelStartingName = "AEIOUY".contains(Character.toString(mNeighbourName.getText().toString().charAt(0))) ||
                 "aeiouy".contains(Character.toString(mNeighbourName.getText().toString().charAt(0)));
 
         //FAB listener to set or unset neighbour as favorite
@@ -122,14 +122,8 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         mNeighbourFB.setText(clickedNeighbourFB);
         mNeighbourAboutMe.setText(clickedNeighbourAM);
 
-        //Test if neighbour is already favorite and manage FAB consequently
-        if (mNeighbour.getIsFavorite()) {
-            mFavNeighbourButton.setActivated(true);
-            mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
-        } else {
-            mFavNeighbourButton.setActivated(false);
-            mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
-        }
+        //Manage FAB according neighbour is favorite or not
+        setFavNeighbourButton(mNeighbour.getIsFavorite());
     }
 
     private void setTotoDetails() {
@@ -145,33 +139,40 @@ public class NeighbourDetailActivity extends AppCompatActivity {
     }
 
     private void addInFavorites(View view) {
-        if (isStartingWithVowel) {
-            String toastThis = "Ajout d'" + mNeighbourName.getText() + " aux favoris !";
-            snackBarThis(toastThis, view);
+        String toastThis;
+        if (mIsVowelStartingName) {
+            toastThis = "Ajout d'" + mNeighbourName.getText() + " aux favoris !";
         } else {
-            String toastThis = "Ajout de " + mNeighbourName.getText() + " aux favoris !";
-            snackBarThis(toastThis, view);
+            toastThis = "Ajout de " + mNeighbourName.getText() + " aux favoris !";
         }
-        mFavNeighbourButton.setActivated(true);
-        mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
+        snackBarThis(toastThis, view);
+        setFavNeighbourButton(true);
         mApiService.addNeighbourToFavorites(mNeighbour);
     }
 
     private void removeFromFavorites(View view) {
-        if (isStartingWithVowel) {
-            String toastThis = "Retrait d'" + mNeighbourName.getText() + " des favoris !";
-            snackBarThis(toastThis, view);
+        String toastThis;
+        if (mIsVowelStartingName) {
+            toastThis = "Retrait d'" + mNeighbourName.getText() + " des favoris.";
         } else {
-            String toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris !";
-            snackBarThis(toastThis, view);
+            toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris.";
         }
-        mFavNeighbourButton.setActivated(false);
-        mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
+        snackBarThis(toastThis, view);
+        setFavNeighbourButton(false);
         mApiService.removeNeighbourFromFavorites(mNeighbour);
     }
 
     private void snackBarThis(String toastThis, View view) {
         Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+    }
+
+    private void setFavNeighbourButton(boolean activated) {
+        mFavNeighbourButton.setActivated(activated);
+        if (activated) {
+            mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
+        } else {
+            mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
+        }
     }
 
     private void totoJoke(View view) {
