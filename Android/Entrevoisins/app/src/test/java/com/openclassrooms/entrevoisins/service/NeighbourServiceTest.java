@@ -45,21 +45,23 @@ public class NeighbourServiceTest {
 
     @Test
     public void getFavoriteNeighboursWithSuccess() {
-        //Given : new service (@Before) and the two last neighbours are favorites
+        //Given : no favorites then the two last neighbours set as favorites
         //When : get favorite neighbours _using getFavoriteNeighbours()_
         //Then : result retrieved equals expected list containing the two last neighbours only
+        service.getNeighbours().forEach(neighbour -> neighbour.setIsFavorite(false));
         int neighboursListSize = service.getNeighbours().size();
         service.getNeighbours().get(neighboursListSize - 1).setIsFavorite(true);
         service.getNeighbours().get(neighboursListSize - 2).setIsFavorite(true);
         List<Neighbour> expectedFavoriteNeighbours = service.getNeighbours().subList(neighboursListSize - 2, neighboursListSize);
-        assertEquals(service.getFavoriteNeighbours(), expectedFavoriteNeighbours);
+        assertEquals(expectedFavoriteNeighbours, service.getFavoriteNeighbours());
     }
 
     @Test
     public void addFavoriteNeighbourWithSuccess() {
-        //Given : add first  and second neighbours _using addFavoriteNeighbour()_
+        //Given : no favorites then add first  and second neighbours _using addFavoriteNeighbour()_
         //When : retrieve favorite neighbours _using previously validated getFavoriteNeighbours()_
         //Then : result contains the two added neighbours
+        service.getNeighbours().forEach(neighbour -> neighbour.setIsFavorite(false));
         service.addNeighbourToFavorites(service.getNeighbours().get(0));
         service.addNeighbourToFavorites(service.getNeighbours().get(1));
         List<Neighbour> expectedFavoriteNeighbours = service.getNeighbours().subList(0, 2);
@@ -68,11 +70,10 @@ public class NeighbourServiceTest {
 
     @Test
     public void removeFavoriteNeighbourWithSuccess() {
-        //Given : first neighbour added in favorites _using previously validated addFavoriteNeighbour()_
-        //When : remove neighbour from favorites _using removeFavoriteNeighbour()_
+        //Given : all neighbours are in favorites _using previously validated addFavoriteNeighbour()_
+        //When : remove first neighbour from favorites _using removeFavoriteNeighbour()_
         //Then : list retrieved _using previously validated getFavoriteNeighbours()_ does not contain removed neighbour
-        service.getNeighbours().get(0).setIsFavorite(false);
-        service.addNeighbourToFavorites(service.getNeighbours().get(0));
+        service.getNeighbours().forEach(neighbour -> service.addNeighbourToFavorites(neighbour));
         service.removeNeighbourFromFavorites(service.getNeighbours().get(0));
         assertFalse(service.getFavoriteNeighbours().contains(service.getNeighbours().get(0)));
     }
