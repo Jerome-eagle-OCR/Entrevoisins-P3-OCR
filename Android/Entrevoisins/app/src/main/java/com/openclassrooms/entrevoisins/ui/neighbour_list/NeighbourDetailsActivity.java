@@ -25,7 +25,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NeighbourDetailActivity extends AppCompatActivity {
+public class NeighbourDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.fav_neighbour_btn)
     FloatingActionButton mFavNeighbourButton;
@@ -54,7 +54,7 @@ public class NeighbourDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_neighbour_detail);
+        setContentView(R.layout.activity_neighbour_details);
         ButterKnife.bind(this);
         mApiService = DI.getNeighbourApiService();
 
@@ -82,11 +82,11 @@ public class NeighbourDetailActivity extends AppCompatActivity {
     private void getAndManageClickedNeighbour() {
         //Get clicked neighbour ID in list from Extra and retrieve her/him from neighbours list
         Intent mIntent = getIntent();
-        long mClickedNeighbourID = mIntent.getLongExtra(MyNeighbourRecyclerViewAdapter.CLICKED_NEIGHBOUR_ID, -1);
-        if (mClickedNeighbourID == -1) {
+        long mClickedNeighbourId = mIntent.getLongExtra(MyNeighbourRecyclerViewAdapter.CLICKED_NEIGHBOUR_ID, -1);
+        if (mClickedNeighbourId == -1) {
             mNeighbour = null;
         } else {
-            mNeighbour = mApiService.getNeighbourFromId(mClickedNeighbourID);
+            mNeighbour = mApiService.getNeighbourFromId(mClickedNeighbourId);
         }
 
         // Set details for non null clicked neighbour
@@ -151,7 +151,7 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         mTBNeighbourName.setText("Toto");
         mNeighbourName.setText("Toto");
         mNeighbourLocation.setText("Totoville à 0km");
-        mNeighbourPhone.setText("+33 0 00 00 00 00");
+        mNeighbourPhone.setText("+00 0 00 00 00 00");
         mNeighbourFB.setText("www.facebook.fr/toto");
         mNeighbourAboutMe.setText("Hello ! J'adore faire des blagues à gogo. Alors, si toi aussi t'es un rigolo, ajoute-moi en amigo !\n");
         mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
@@ -226,18 +226,18 @@ public class NeighbourDetailActivity extends AppCompatActivity {
      * @param view
      */
     private void totoJoke(View view) {
-        Snackbar.make(view, "Toto est un farceur !\nTu ne peux pas l'ajouter en amigo...", Snackbar.LENGTH_INDEFINITE).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorAccent)).show();
-        mFavNeighbourButton.setVisibility(view.GONE);
+        Snackbar.make(view, "Toto est un farceur !\nTu ne peux pas l'ajouter en amigo...", Snackbar.LENGTH_INDEFINITE).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.design_default_color_error)).show();
+        mFavNeighbourButton.setVisibility(View.GONE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mTotoJoke = true;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(NeighbourDetailActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(NeighbourDetailsActivity.this);
 
                 builder.setTitle("Encore une blague de Toto...")
                         .setCancelable(false)
-                        .setMessage("Appuie sur OK pour revenir à la liste de voisins")
+                        .setMessage("Appuie sur OK pour revenir à\nla liste de voisins.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -251,7 +251,7 @@ public class NeighbourDetailActivity extends AppCompatActivity {
                         .show();
                 mTotoJoke = false;
             }
-        }, 7000);
+        }, 5555);
     }
 
     /**

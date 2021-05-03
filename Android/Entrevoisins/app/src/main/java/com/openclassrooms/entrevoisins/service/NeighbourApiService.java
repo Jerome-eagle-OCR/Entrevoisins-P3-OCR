@@ -34,8 +34,8 @@ public interface NeighbourApiService {
     /**
      * Get neighbour from his/her id
      *
-     * @param neighbourId
-     * @return
+     * @param neighbourId id of neighbour wanted to be retrieved
+     * @return neighbour retrieved in list or null if not
      */
     Neighbour getNeighbourFromId(Long neighbourId);
 

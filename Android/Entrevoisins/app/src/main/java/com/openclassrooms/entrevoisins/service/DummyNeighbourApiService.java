@@ -42,14 +42,14 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     /**
      * Get neighbour from his/her id
      *
-     * @param neighbourId
-     * @return
+     * @param neighbourId id of neighbour wanted to be retrieved
+     * @return neighbour retrieved in list or null if not
      */
     @Override
     public Neighbour getNeighbourFromId(Long neighbourId) {
-        for (int i = 0; i < neighbours.size(); i++) {
-            if (neighbours.get(i).getId() == neighbourId) {
-                return neighbours.get(i);
+        for (Neighbour neighbour : neighbours) {
+            if (neighbour.getId() == neighbourId) {
+                return neighbour;
             }
         }
         return null;
@@ -64,9 +64,9 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     public List<Neighbour> getFavoriteNeighbours() {
 
         List<Neighbour> favoriteNeighbours = new ArrayList<>();
-        for (int i = 0; i < neighbours.size(); i++) {
-            if (neighbours.get(i).getIsFavorite()) {
-                favoriteNeighbours.add(neighbours.get(i));
+        for (Neighbour neighbour : neighbours) {
+            if (neighbour.getIsFavorite()) {
+                favoriteNeighbours.add(neighbour);
             }
         }
         //Could be used instead but requires Nougat at least while app allows Lollipop as minimum :

@@ -76,7 +76,7 @@ public class ListNeighbourActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailActivity.class); //Toto easter egg
+                        Intent neighbourDetailActivityIntent = new Intent(ListNeighbourActivity.this, NeighbourDetailsActivity.class); //Toto easter egg
                         startActivity(neighbourDetailActivityIntent);
                     }
                 }, 2000);

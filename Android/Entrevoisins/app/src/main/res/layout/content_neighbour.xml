@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:background="?attr/colorButtonNormal"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ui.neighbour_list.NeighbourDetailActivity"
-    tools:showIn="@layout/activity_neighbour_detail">
+    tools:context=".ui.neighbour_list.NeighbourDetailsActivity"
+    tools:showIn="@layout/activity_neighbour_details">
 
     <LinearLayout
         android:layout_width="match_parent"
