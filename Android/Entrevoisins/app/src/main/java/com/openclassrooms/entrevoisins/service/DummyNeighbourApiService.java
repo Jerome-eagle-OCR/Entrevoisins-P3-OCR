@@ -40,7 +40,23 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     }
 
     /**
-     * Get list of favorite neighbours
+     * Get neighbour from his/her id
+     *
+     * @param neighbourId
+     * @return
+     */
+    @Override
+    public Neighbour getNeighbourFromId(Long neighbourId) {
+        for (int i = 0; i < neighbours.size(); i++) {
+            if (neighbours.get(i).getId() == neighbourId) {
+                return neighbours.get(i);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get a list of favorite neighbours
      *
      * @return list
      */
@@ -59,9 +75,9 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     }
 
     /**
-     * Add neighbour in favorite list
+     * Add neighbour in favorites
      *
-     * @param neighbour
+     * @param neighbour the neighbour to set as favorite
      */
     @Override
     public void addNeighbourToFavorites(Neighbour neighbour) {
@@ -69,9 +85,9 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     }
 
     /**
-     * Remove neighbour from favorite list
+     * Remove neighbour from favorites
      *
-     * @param neighbour
+     * @param neighbour the neighbour to unset as favorite
      */
     @Override
     public void removeNeighbourFromFavorites(Neighbour neighbour) {

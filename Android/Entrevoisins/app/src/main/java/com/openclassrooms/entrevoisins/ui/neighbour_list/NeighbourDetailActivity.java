@@ -63,20 +63,30 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         getAndManageClickedNeighbour();
     }
 
+
+    /**
+     * Configure action bar
+     */
     private void configureToolbar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+
+    /**
+     * Retrieve selected neighbour index in neighbours list from intent extra and get neighbour from index
+     * Call appropriated method to set page with selected neighbour details
+     * Listen to floating action button to add/remove neighbour in/from favorites calling appropriated method
+     */
     private void getAndManageClickedNeighbour() {
-        //Get clicked neighbour index in list from Extra
+        //Get clicked neighbour ID in list from Extra and retrieve her/him from neighbours list
         Intent mIntent = getIntent();
-        int mClickedNeighbourIndexInList = mIntent.getIntExtra("CLICKED_NEIGHBOUR_INDEX_IN_LIST", -1);
-        if (mClickedNeighbourIndexInList == -1) {
+        long mClickedNeighbourID = mIntent.getLongExtra(MyNeighbourRecyclerViewAdapter.CLICKED_NEIGHBOUR_ID, -1);
+        if (mClickedNeighbourID == -1) {
             mNeighbour = null;
         } else {
-            mNeighbour = mApiService.getNeighbours().get(mClickedNeighbourIndexInList);
+            mNeighbour = mApiService.getNeighbourFromId(mClickedNeighbourID);
         }
 
         // Set details for non null clicked neighbour
@@ -108,11 +118,16 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * Set widgets in associated layout to display selected neighbour details
+     * Call method to set FAB
+     */
     private void setNeighbourDetails() {
         String clickedNeighbourName = mNeighbour.getName();
         String clickedNeighbourFB = "www.facebook.fr/" + clickedNeighbourName.toLowerCase(); //create mock FB address based on neighbour name
         String clickedNeighbourAM = mNeighbour.getAboutMe() + "\n"; //add extra line at the end of about me text
-        String improvedAvatar = mNeighbour.getAvatarUrl().replace("cc/150", "cc/320"); //get image with higher resolution (320p instead of 150p)
+        String improvedAvatar = mNeighbour.getAvatarUrl().replace("cc/150", "cc/320"); //get image with double resolution (320p instead of 150p)
 
         Glide.with(this).load(improvedAvatar).into(mNeighbourPic);
         mTBNeighbourName.setText(clickedNeighbourName);
@@ -126,6 +141,10 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         setFavNeighbourButton(mNeighbour.getIsFavorite());
     }
 
+
+    /**
+     * In case neighbour is null
+     */
     private void setTotoDetails() {
         //Have fun with Toto
         mNeighbourPic.setImageDrawable(getDrawable(R.drawable.toto));
@@ -138,6 +157,12 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
     }
 
+
+    /**
+     * Add neighbour in favorites, set msg and pass it to method to display a snackBar and call method to properly set FAB
+     *
+     * @param view
+     */
     private void addInFavorites(View view) {
         String toastThis;
         if (mIsVowelStartingName) {
@@ -150,6 +175,12 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         mApiService.addNeighbourToFavorites(mNeighbour);
     }
 
+
+    /**
+     * Remove neighbour from favorites, set msg and pass it to method to display a snackBar and call method to properly set FAB
+     *
+     * @param view
+     */
     private void removeFromFavorites(View view) {
         String toastThis;
         if (mIsVowelStartingName) {
@@ -162,19 +193,38 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         mApiService.removeNeighbourFromFavorites(mNeighbour);
     }
 
+
+    /**
+     * Display a snackBar to confirm action on neighbour
+     *
+     * @param toastThis msg to display
+     * @param view
+     */
     private void snackBarThis(String toastThis, View view) {
         Snackbar.make(view, toastThis, Snackbar.LENGTH_SHORT).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 
-    private void setFavNeighbourButton(boolean activated) {
-        mFavNeighbourButton.setActivated(activated);
-        if (activated) {
+
+    /**
+     * Set floating action button
+     *
+     * @param isActivated boolean reflecting neighbour's favorite status
+     */
+    private void setFavNeighbourButton(boolean isActivated) {
+        mFavNeighbourButton.setActivated(isActivated);
+        if (isActivated) {
             mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
         } else {
             mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
         }
     }
 
+
+    /**
+     * In case neighbour is null
+     *
+     * @param view
+     */
     private void totoJoke(View view) {
         Snackbar.make(view, "Toto est un farceur !\nTu ne peux pas l'ajouter en amigo...", Snackbar.LENGTH_INDEFINITE).setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).setBackgroundTint(getResources().getColor(R.color.colorAccent)).show();
         mFavNeighbourButton.setVisibility(view.GONE);
@@ -204,6 +254,12 @@ public class NeighbourDetailActivity extends AppCompatActivity {
         }, 7000);
     }
 
+    /**
+     * In case neighbour is null
+     *
+     * @param event
+     * @return
+     */
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         return (!mTotoJoke) && super.dispatchKeyEvent(event);

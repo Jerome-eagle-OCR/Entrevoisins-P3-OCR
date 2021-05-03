@@ -1,6 +1,5 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +38,7 @@ public class NeighbourFragment extends Fragment {
     /**
      * Create and return a new instance
      *
+     * @param fragmentPosition page actually displayed
      * @return @{@link NeighbourFragment}
      */
     public static NeighbourFragment newInstance(int fragmentPosition) {
@@ -51,7 +51,7 @@ public class NeighbourFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            mFragmentPosition = savedInstanceState.getInt(BUNDLE_STATE_FRAGMENT_POSITION);
+            mFragmentPosition = savedInstanceState.getInt(BUNDLE_STATE_FRAGMENT_POSITION);//avoid list issue on screen orientation change
         }
         mApiService = DI.getNeighbourApiService();
     }
@@ -60,15 +60,15 @@ public class NeighbourFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
-        Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
     }
 
     /**
      * Init the List of neighbours
+     * Test is done on fragment position to get the right list to pass to recyclerViewAdapter and set proper content description
      */
     private void initList() {
         switch (mFragmentPosition) {
@@ -115,7 +115,7 @@ public class NeighbourFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(BUNDLE_STATE_FRAGMENT_POSITION, mFragmentPosition);
+        outState.putInt(BUNDLE_STATE_FRAGMENT_POSITION, mFragmentPosition);//avoid list issue on screen orientation change
         super.onSaveInstanceState(outState);
     }
 }

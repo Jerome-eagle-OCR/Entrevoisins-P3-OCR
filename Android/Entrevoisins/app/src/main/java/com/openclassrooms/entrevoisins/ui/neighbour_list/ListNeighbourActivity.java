@@ -81,8 +81,17 @@ public class ListNeighbourActivity extends AppCompatActivity {
                     }
                 }, 2000);
                 break;
+            case 5:
+            case 4:
+            case 3:
             case 2:
-                Toast.makeText(ListNeighbourActivity.this, "Vous êtes maintenant à 4 clics de la surprise !", Toast.LENGTH_SHORT).show();
+                String totoToast;
+                if (totoJokeCount == 5) {
+                    totoToast = "Vous êtes maintenant à 1 clic de la surprise !";
+                } else {
+                    totoToast = "Vous êtes maintenant à " + (6 - totoJokeCount) + " clics de la surprise !";
+                }
+                Toast.makeText(ListNeighbourActivity.this, totoToast, Toast.LENGTH_SHORT).show();
             default:
                 totoJokeCount++;
         }

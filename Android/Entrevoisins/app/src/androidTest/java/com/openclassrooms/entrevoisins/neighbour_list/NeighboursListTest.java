@@ -1,7 +1,8 @@
 package com.openclassrooms.entrevoisins.neighbour_list;
 
+import android.view.View;
+
 import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -12,6 +13,7 @@ import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,9 +71,9 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .check(matches(hasMinimumChildCount(1)));
     }
 
@@ -81,13 +83,13 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(TEST_NEIGHBOUR_3 + 1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .check(withItemCount(ITEMS_COUNT - 1));
     }
 
@@ -97,13 +99,13 @@ public class NeighboursListTest {
     @Test
     public void myNeighbourList_clickOnNeighbour_shouldDisplayNeighbourDetails() {
         //Given : We choose a neighbour in the list to see his/her details
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .check(matches(isDisplayed()));
         //When : We perform a click anywhere on the item but the delete button
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(TEST_NEIGHBOUR_1, click()));
         //Then : The neighbour details page displays
-        onView(ViewMatchers.withId(R.id.neighbour_details)).check(matches(isDisplayed()));
+        onView(withId(R.id.neighbour_details)).check(matches(isDisplayed()));
     }
 
     /**
@@ -112,12 +114,12 @@ public class NeighboursListTest {
     @Test
     public void myNeighbourDetailsView_shouldDisplayNeighbourName() {
         //Given : We pick a neighbour item in the list to see his/her details
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(TEST_NEIGHBOUR_1, click()));
         //When : Neighbour details view is displayed
-        onView(ViewMatchers.withId(R.id.neighbour_details)).check(matches(isDisplayed()));
+        onView(withId(R.id.neighbour_details)).check(matches(isDisplayed()));
         //Then : Neighbour's name is properly filled
-        onView(ViewMatchers.withId(R.id.tb_neighbour_name)).check(matches(withText(service.getNeighbours().get(TEST_NEIGHBOUR_1).getName())));
+        onView(withId(R.id.tb_neighbour_name)).check(matches(withText(service.getNeighbours().get(TEST_NEIGHBOUR_1).getName())));
     }
 
     /**
@@ -125,29 +127,29 @@ public class NeighboursListTest {
      */
     @Test
     public void myFavoriteNeighboursList_deleteAction_shouldRemoveItem() {
-        service.getNeighbours().forEach(neighbour -> service.removeNeighbourFromFavorites(neighbour));
         // Given : We remove the last item in favorite list that counts 3
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        service.getNeighbours().forEach(neighbour -> service.removeNeighbourFromFavorites(neighbour));
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(TEST_NEIGHBOUR_1, click()));
-        onView(ViewMatchers.withId(R.id.fav_neighbour_btn)).perform(click());
+        onView(withId(R.id.fav_neighbour_btn)).perform(click());
         pressBack();
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(TEST_NEIGHBOUR_2, click()));
-        onView(ViewMatchers.withId(R.id.fav_neighbour_btn)).perform(click());
+        onView(withId(R.id.fav_neighbour_btn)).perform(click());
         pressBack();
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(TEST_NEIGHBOUR_3 + 1, click()));
-        onView(ViewMatchers.withId(R.id.fav_neighbour_btn)).perform(click());
+        onView(withId(R.id.fav_neighbour_btn)).perform(click());
         pressBack();
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(swipeLeft());
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))
                 .check(withItemCount(FAVORITE_ITEMS_COUNT));
         // When : perform a click on a delete icon
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(2, new DeleteViewAction()));
         // Then : the number of elements is 2 and they contain the 2 left favorite neighbours' names
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))
                 .check(withItemCount(FAVORITE_ITEMS_COUNT - 1))
                 .check(matches(hasDescendant(withText(service.getNeighbours().get(TEST_NEIGHBOUR_1).getName()))))
                 .check(matches(hasDescendant(withText(service.getNeighbours().get(TEST_NEIGHBOUR_2).getName()))));
@@ -158,28 +160,32 @@ public class NeighboursListTest {
      */
     @Test
     public void myFavoriteNeighboursList_containsOnlyFavorites() {
-        service.getNeighbours().forEach(neighbour -> service.removeNeighbourFromFavorites(neighbour));
         // Given : We set 3 neighbours as favorites
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        service.getNeighbours().forEach(neighbour -> service.removeNeighbourFromFavorites(neighbour));
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(actionOnItemAtPosition(TEST_NEIGHBOUR_1, click()));
         onView(withId(R.id.fav_neighbour_btn)).perform(click());
         pressBack();
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(actionOnItemAtPosition(TEST_NEIGHBOUR_2, click()));
         onView(withId(R.id.fav_neighbour_btn)).perform(click());
         pressBack();
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(actionOnItemAtPosition(TEST_NEIGHBOUR_3, click()));
         onView(withId(R.id.fav_neighbour_btn)).perform(click());
         pressBack();
         // When : we display favorite list
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.ALL_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(swipeLeft());
         // The number of elements is only 3 and they contain the 3 favorite neighbours' names
-        onView(allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))))
+        onView(getViewByContentDescription(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))
                 .check(withItemCount(FAVORITE_ITEMS_COUNT))
                 .check(matches(hasDescendant(withText(service.getNeighbours().get(TEST_NEIGHBOUR_1).getName()))))
                 .check(matches(hasDescendant(withText(service.getNeighbours().get(TEST_NEIGHBOUR_2).getName()))))
                 .check(matches(hasDescendant(withText(service.getNeighbours().get(TEST_NEIGHBOUR_3).getName()))));
+    }
+
+    private static Matcher<View> getViewByContentDescription(int contentDescription) {
+        return allOf(withId(R.id.list_neighbours), withContentDescription(String.valueOf(contentDescription)));
     }
 }

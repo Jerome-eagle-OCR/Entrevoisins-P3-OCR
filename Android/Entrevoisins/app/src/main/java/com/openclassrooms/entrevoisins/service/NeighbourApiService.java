@@ -32,6 +32,14 @@ public interface NeighbourApiService {
     void createNeighbour(Neighbour neighbour);
 
     /**
+     * Get neighbour from his/her id
+     *
+     * @param neighbourId
+     * @return
+     */
+    Neighbour getNeighbourFromId(Long neighbourId);
+
+    /**
      * Get favorite list
      */
     List<Neighbour> getFavoriteNeighbours();
