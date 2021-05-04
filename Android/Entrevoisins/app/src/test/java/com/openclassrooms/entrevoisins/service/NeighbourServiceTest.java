@@ -45,7 +45,7 @@ public class NeighbourServiceTest {
     }
 
     @Test
-    public void testGetNeighbourFromId() {
+    public void getNeighbourFromIdWithSuccess() {
         //Given : neighbour id
         //When : get neighbour from id _using getNeighbourFromId()_
         //Then : retrieved neighbour is the expected one
