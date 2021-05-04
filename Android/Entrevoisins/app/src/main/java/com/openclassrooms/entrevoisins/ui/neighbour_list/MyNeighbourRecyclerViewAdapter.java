@@ -60,9 +60,9 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View v) {
                 long clickedNeighbourId = neighbour.getId(); //Retrieve id of selected neighbour
-                Intent neighbourDetailActivityIntent = new Intent(holder.itemView.getContext(), NeighbourDetailsActivity.class);
+                Intent neighbourDetailActivityIntent = new Intent(v.getContext(), NeighbourDetailsActivity.class);
                 neighbourDetailActivityIntent.putExtra(CLICKED_NEIGHBOUR_ID, clickedNeighbourId); //Selected neighbour id put in Extra to display details of actual selected neighbour
-                holder.itemView.getContext().startActivity(neighbourDetailActivityIntent);
+                v.getContext().startActivity(neighbourDetailActivityIntent);
             }
         });
     }

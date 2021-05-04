@@ -105,7 +105,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         mFavNeighbourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mFavNeighbourButton.isActivated() && !mNeighbourName.getText().equals("Toto")) {
+                if (!mNeighbour.getIsFavorite() && !mNeighbourName.getText().equals("Toto")) {
                     addInFavorites(view);
                 } else {
                     if (mNeighbourName.getText().equals("Toto")) {
@@ -138,7 +138,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         mNeighbourAboutMe.setText(clickedNeighbourAM);
 
         //Manage FAB according neighbour is favorite or not
-        setFavNeighbourButton(mNeighbour.getIsFavorite());
+        setFavNeighbourButton(mNeighbour);
     }
 
 
@@ -171,8 +171,8 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
             toastThis = "Ajout de " + mNeighbourName.getText() + " aux favoris !";
         }
         snackBarThis(toastThis, view);
-        setFavNeighbourButton(true);
         mApiService.addNeighbourToFavorites(mNeighbour);
+        setFavNeighbourButton(mNeighbour);
     }
 
 
@@ -189,8 +189,8 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
             toastThis = "Retrait de " + mNeighbourName.getText() + " des favoris.";
         }
         snackBarThis(toastThis, view);
-        setFavNeighbourButton(false);
         mApiService.removeNeighbourFromFavorites(mNeighbour);
+        setFavNeighbourButton(mNeighbour);
     }
 
 
@@ -206,17 +206,12 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
 
 
     /**
-     * Set floating action button
+     * Set floating action button according neighbour's favorite status
      *
-     * @param isActivated boolean reflecting neighbour's favorite status
+     * @param neighbour neighbour which favorite status will be tested
      */
-    private void setFavNeighbourButton(boolean isActivated) {
-        mFavNeighbourButton.setActivated(isActivated);
-        if (isActivated) {
-            mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_yellow_star_24));
-        } else {
-            mFavNeighbourButton.setImageDrawable(getDrawable(R.drawable.ic_grey_star_24));
-        }
+    private void setFavNeighbourButton(Neighbour neighbour) {
+        mFavNeighbourButton.setImageDrawable(neighbour.getIsFavorite() ? getDrawable(R.drawable.ic_yellow_star_24) : getDrawable(R.drawable.ic_grey_star_24));
     }
 
 

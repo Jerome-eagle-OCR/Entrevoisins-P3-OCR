@@ -23,6 +23,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.action.ViewActions.swipeRight;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
@@ -162,6 +163,12 @@ public class NeighboursListTest {
     public void myFavoriteNeighboursList_containsOnlyFavorites() {
         // Given : We set 3 neighbours as favorites
         service.getNeighbours().forEach(neighbour -> service.removeNeighbourFromFavorites(neighbour));
+        onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
+                .perform(swipeLeft());
+        onView(getViewByContentDescription(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))
+                .check(withItemCount(0));
+        onView(getViewByContentDescription(NeighbourFragment.FAVORITE_NEIGHBOURS_PAGE))
+                .perform(swipeRight());
         onView(getViewByContentDescription(NeighbourFragment.ALL_NEIGHBOURS_PAGE))
                 .perform(actionOnItemAtPosition(TEST_NEIGHBOUR_1, click()));
         onView(withId(R.id.fav_neighbour_btn)).perform(click());

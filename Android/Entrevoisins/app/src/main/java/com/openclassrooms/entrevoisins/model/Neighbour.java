@@ -40,7 +40,7 @@ public class Neighbour {
     /**
      * Favorite status
      */
-    private Boolean isFavorite = false;
+    private Boolean isFavorite;
 
     /**
      * Constructor
@@ -57,6 +57,7 @@ public class Neighbour {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
+        this.isFavorite = isFavorite;
     }
 
     public long getId() {
