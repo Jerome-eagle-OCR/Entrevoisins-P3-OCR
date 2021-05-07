@@ -105,14 +105,14 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         mFavNeighbourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mNeighbour.getIsFavorite() && !mNeighbourName.getText().equals("Toto")) {
-                    addInFavorites(view);
-                } else {
-                    if (mNeighbourName.getText().equals("Toto")) {
-                        totoJoke(view);
+                if (!mNeighbourName.getText().equals("Toto")) {
+                    if (!mNeighbour.getIsFavorite()) {
+                        addInFavorites(view);
                     } else {
                         removeFromFavorites(view);
                     }
+                } else {
+                    totoJoke(view);
                 }
             }
         });
